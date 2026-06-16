@@ -1,0 +1,8 @@
+discord.py
+python-dotenv
+pytz
+apscheduler
+aiohttp
+sherlock-project
+Pillow
+dnspython
