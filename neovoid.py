@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse
 
 # ================= COMMAND LINE ARGUMENTS =================
-parser = argparse.ArgumentParser(description="NeoVoid Bot")
+parser = argparse.ArgumentParser(description="TheBlackIris Bot")
 parser.add_argument("--bypass-warnings", action="store_true", help="Bypass warnings and start the bot even with missing/incorrect configuration")
 args = parser.parse_args()
 
@@ -61,7 +61,6 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 tree = bot.tree
 
 application_sessions = {}
-age_verification_sessions = {}
 
 # Thread pool for running blocking operations
 thread_pool = ThreadPoolExecutor(max_workers=5)
@@ -98,21 +97,21 @@ if not TOKEN:
         exit()
 
 OWNER_IDS = [1456125870421835892, 688437410186395776]
-APPLICATION_POST_CHANNEL_ID = 1461065994125447384
-APPLICATION_SUBMIT_CHANNEL_ID = 1461067708710916220
-SECURITY_ROLE_ID = 1470270460544679996
-STAFF_ROLE_ID = 1462308430202015765
-BARTENDER_ROLE_ID = 1470270534804701214
-BAN_LOG_CHANNEL_ID = 1461067663466959031
-KICK_LOG_CHANNEL_ID = 1461067663466959031
-LOG_CHANNEL_ID = 1461067683037446378
-WELCOME_CHANNEL_ID = 1461055465889992868
-MEMBER_ROLE_ID = 1461075298899722354
+APPLICATION_POST_CHANNEL_ID = 1566984141780680764
+APPLICATION_SUBMIT_CHANNEL_ID = 1569007639860351046
+STAFF_ROLE_ID = 1549569470425600020
+BAN_LOG_CHANNEL_ID = 1566983722828431461
+KICK_LOG_CHANNEL_ID = 1566983722828431461
+LOG_CHANNEL_ID = 1566983722828431461
+WELCOME_CHANNEL_ID = 1566969379378176030
+VERIFICATION_CHANNEL_ID = 1569020504428384387
+JOIN_ROLE_ID = 1569020711110975549
+MEMBER_ROLE_ID = 1532084777585475705
 
-FOUNDER_ROLE_ID = 1461057322418962567
-OWNER_ROLE_ID = 1461052878717456416
-STAFF_LIST_CHANNEL_ID = 1461055759918960640
-MESSAGE_LOG_CHANNEL_ID = 1461067651047493653
+FOUNDER_ROLE_ID = 1563295287349354679
+OWNER_ROLE_ID = 1531830875619197040
+STAFF_LIST_CHANNEL_ID = 1566970346287009842
+MESSAGE_LOG_CHANNEL_ID = 1566983722828431461
 GENERAL_CHAT_CHANNEL_ID = 1461052279305142398
 DAILY_QUESTION_CHANNEL_ID = 1478970607856123986
 DAILY_QUESTION_CATEGORIES = [
@@ -135,7 +134,7 @@ CEREBRAS_MODEL = os.getenv("CEREBRAS_MODEL", "gpt-oss-120b")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini")
 OPENROUTER_REFERER = os.getenv("OPENROUTER_REFERER", "https://discord.com")
-OPENROUTER_TITLE = os.getenv("OPENROUTER_TITLE", "NeoVoid Discord Bot")
+OPENROUTER_TITLE = os.getenv("OPENROUTER_TITLE", "TheBlackIris Discord Bot")
 LLM_PROVIDER_DEFAULT = "openrouter"
 AI_MAX_CONTEXT_MESSAGES = 20
 AI_AUTOREPLY_COOLDOWN_SECONDS = 90
@@ -167,54 +166,56 @@ BACKFILL_PER_CHANNEL_SCAN_CAP = 3000
 BACKFILL_GUILD_SCAN_CAP = 60000
 
 # Ticket System Configuration
-TICKET_CHANNEL_ID = 1461066459731202143
+TICKET_CHANNEL_ID = 1566971550392127558
 TICKET_CATEGORY_ID = None
-TICKET_ARCHIVE_CATEGORY_ID = 1461067772120269083
-
-# NEW: Age Verification Configuration
-AGE_VERIFICATION_TICKET_CHANNEL_ID = 1462308296898642093
-AGE_VERIFICATION_SUBMIT_CHANNEL_ID = 1474585000669216883
-AGE_VERIFIED_ROLE_ID = 1470281207479795732
+TICKET_ARCHIVE_CATEGORY_ID = 1569004281258975312
 
 # UPDATED: Ticket manager roles as requested
-TICKET_MANAGER_ROLES = [1461057322418962567, 1461052878717456416, 1461069473086701783, 1470270460544679996]
+TICKET_MANAGER_ROLES = [1563295287349354679, 1569546478777536512, 1531830875619197040, 1561161919119753266, 1531828111820325064]
 
 # NEW: Staff Complaints Configuration - UPDATED FOR CHANNEL SYSTEM
-STAFF_COMPLAINTS_CHANNEL_ID = 1461557048620744795
+STAFF_COMPLAINTS_CHANNEL_ID = 1569006375940399104
 STAFF_COMPLAINTS_CATEGORY_ID = None # Will be determined from channel category
-STAFF_COMPLAINTS_ARCHIVE_CATEGORY_ID = 1461067772120269083 # Same as tickets
-STAFF_COMPLAINTS_ROLE_ID = [1461057322418962567, 1461052878717456416] # Only this role can see the complaint channel
-STAFF_COMPLAINTS_MANAGER_ROLES = [1461057322418962567, 1461052878717456416] # Only this role can manage staff complaints
+STAFF_COMPLAINTS_ARCHIVE_CATEGORY_ID = 1569004281258975312 # Same as tickets
+STAFF_COMPLAINTS_ROLE_ID = [1563295287349354679, 1569546478777536512, 1531830875619197040] # Only this role can see the complaint channel
+STAFF_COMPLAINTS_MANAGER_ROLES = [1563295287349354679, 1569546478777536512, 1531830875619197040] # Only this role can manage staff complaints
 
 # Confessions channel IDs
-CONFESSIONS_SUBMIT_CHANNEL_ID = 1461557248160563302
-CONFESSIONS_APPROVAL_CHANNEL_ID = 1461067683037446378
-CONFESSIONS_POST_CHANNEL_ID = 1461557248160563302
+CONFESSIONS_SUBMIT_CHANNEL_ID = 1566972896520183930
+CONFESSIONS_APPROVAL_CHANNEL_ID = 1566983722828431461
+CONFESSIONS_POST_CHANNEL_ID = 1566972896520183930
+CONFESSIONS_REVIEW_ENABLED = True
 
 # ================= UPDATED: Staff roles structure =================
 STAFF_ROLES = {
-    1461057322418962567: "Founder",
-    1461052878717456416: "Director",
-    1461069473086701783: "Manager",
-    1470270460544679996: "Security",
-    1470270534804701214: "Bartender"
+    1563295287349354679: "Founder",
+    1569546478777536512: "Owner",
+    1531830875619197040: "Director",
+    1561161919119753266: "Manager",
+    1531828111820325064: "Admin",
+    1531829121150357705: "Moderator",
+    1549569470425600020: "Staff"
 }
 
 # ================= UPDATED: Role hierarchy =================
 ROLE_HIERARCHY = [
-    1461057322418962567, # Founder
-    1461052878717456416, # Director
-    1461069473086701783, # Manager
-    1470270460544679996, # Security
-    1470270534804701214  # Bartender
+    1563295287349354679, # Founder
+    1569546478777536512, # Owner
+    1531830875619197040, # Director
+    1561161919119753266, # Manager
+    1531828111820325064, # Admin
+    1531829121150357705, # Moderator
+    1549569470425600020  # Staff
 ]
 
 # ================= UPDATED: Everyone allowed roles =================
 EVERYONE_ALLOWED_ROLES = [
-    1461057322418962567, # Founder
-    1461052878717456416, # Director
-    1461069473086701783, # Manager
-    1470270460544679996  # Security
+    1563295287349354679, # Founder
+    1569546478777536512, # Owner
+    1531830875619197040, # Director
+    1561161919119753266, # Manager
+    1531828111820325064, # Admin
+    1531829121150357705  # Moderator
 ]
 
 MODERATE_BLACKLIST = [
@@ -346,7 +347,8 @@ class CommandLogger:
     def log_member_message(self, guild_id: int, guild_name: str, channel_id: int, channel_name: str, user_id: int, user_name: str, message_id: int, content: str):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         try:
-            user_log_dir = self.members_logs_dir / str(user_id)
+            safe_name = re.sub(r'[^\w.\- ]', '', str(user_name)).strip() or str(user_id)
+            user_log_dir = self.members_logs_dir / safe_name
             user_log_dir.mkdir(exist_ok=True)
             log_file = user_log_dir / f"messages_{datetime.now().strftime('%Y-%m')}.txt"
             with open(log_file, "a", encoding="utf-8") as f:
@@ -357,7 +359,8 @@ class CommandLogger:
     def log_member_event(self, guild_id: int, guild_name: str, user_id: int, user_name: str, event_type: str, details: str = ""):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         try:
-            user_log_dir = self.members_logs_dir / str(user_id)
+            safe_name = re.sub(r'[^\w.\- ]', '', str(user_name)).strip() or str(user_id)
+            user_log_dir = self.members_logs_dir / safe_name
             user_log_dir.mkdir(exist_ok=True)
             log_file = user_log_dir / f"events_{datetime.now().strftime('%Y-%m')}.txt"
             with open(log_file, "a", encoding="utf-8") as f:
@@ -608,19 +611,6 @@ def setup_database():
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (confession_id) REFERENCES confessions (confession_id))''')
 
-    # NEW: Age verification table
-    c.execute('''CREATE TABLE IF NOT EXISTS age_verifications (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER,
-                vrchat_link TEXT,
-                id_picture_url TEXT,
-                holding_id_picture_url TEXT,
-                status TEXT DEFAULT 'pending',
-                submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                reviewed_at DATETIME,
-                reviewed_by INTEGER,
-                reason TEXT
-            )''')
     c.execute('''CREATE TABLE IF NOT EXISTS vrchat_links (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 guild_id INTEGER NOT NULL,
@@ -1071,21 +1061,6 @@ def set_staff_complaints_message_id(message_id):
     conn.commit()
     conn.close()
 
-def get_age_verification_message_id():
-    conn = sqlite3.connect('bot_data.db')
-    c = conn.cursor()
-    c.execute("SELECT value FROM settings WHERE key='age_verification_message_id'")
-    result = c.fetchone()
-    conn.close()
-    return int(result[0]) if result else 0
-
-def set_age_verification_message_id(message_id):
-    conn = sqlite3.connect('bot_data.db')
-    c = conn.cursor()
-    c.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('age_verification_message_id', ?)", (str(message_id),))
-    conn.commit()
-    conn.close()
-
 def has_founder_or_owner_role(member: Optional[discord.Member]) -> bool:
     if member is None:
         return False
@@ -1313,6 +1288,200 @@ def get_member_link_record(guild_id: int, user_id: int):
         "linked_at": row[5],
         "updated_at": row[6],
     }
+
+def _sherlock_member_dir(guild_id: int, member: discord.Member) -> Path:
+    safe_name = re.sub(r'[^\w.\- ]', '', str(member)).strip() or str(member.id)
+    base = Path("logs") / "members" / safe_name / "sherlock"
+    base.mkdir(parents=True, exist_ok=True)
+    return base
+
+async def run_sherlock_for_username(username: str, output_dir: Path, timeout: int = 3) -> tuple[int, str]:
+    """Run sherlock for a single username. Returns (found_count, output_file_path)."""
+    username = (username or "").strip()
+    if not username or len(username) < 2:
+        return 0, ""
+    # sherlock usernames can't contain spaces; sanitize
+    safe_username = username.replace(" ", "")
+    if len(safe_username) < 2:
+        return 0, ""
+    out_dir = output_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
+    # Remove stale file
+    target_file = out_dir / f"{safe_username}.txt"
+    try:
+        if target_file.exists():
+            target_file.unlink()
+    except Exception:
+        pass
+
+    proc = await asyncio.create_subprocess_exec(
+        "sherlock", safe_username, "--timeout", str(timeout), "--no-color",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+        cwd=str(out_dir),
+    )
+    try:
+        stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=120)
+    except asyncio.TimeoutError:
+        try:
+            proc.kill()
+        except Exception:
+            pass
+        return 0, str(target_file)
+
+    output_text = (stdout or b"").decode("utf-8", errors="replace")
+    # Count found lines like "[+]"
+    found_count = output_text.count("[+]")
+    # sherlock writes file named safe_username.txt in cwd
+    if not target_file.exists():
+        # fallback: maybe file named differently
+        candidates = list(out_dir.glob("*.txt"))
+        if candidates:
+            target_file = max(candidates, key=lambda p: p.stat().st_mtime)
+    return found_count, str(target_file)
+
+async def run_sherlock_scan_for_member(guild: discord.Guild, member: discord.Member):
+    """Gather candidate usernames and run sherlock for each, storing results."""
+    if member.bot:
+        return []
+    usernames = []
+    # Discord username
+    usernames.append((member.name, "discord_username"))
+    # Display name (if different)
+    if member.display_name and member.display_name != member.name:
+        usernames.append((member.display_name, "discord_display_name"))
+    # VRChat name from link
+    link_record = get_member_link_record(guild.id, member.id)
+    if link_record:
+        vr_name = link_record.get("vrchat_username") or link_record.get("vrchat_identifier")
+        if vr_name:
+            usernames.append((vr_name, "vrchat_name"))
+        vr_profile = get_vrchat_profile_data(guild.id, member.id)
+        if vr_profile:
+            dn = vr_profile.get("displayName")
+            if dn and dn not in [u[0] for u in usernames]:
+                usernames.append((dn, "vrchat_display_name"))
+            un = vr_profile.get("username")
+            if un and un not in [u[0] for u in usernames]:
+                usernames.append((un, "vrchat_username"))
+
+    out_dir = _sherlock_member_dir(guild.id, member)
+    results = []
+    # Dedupe by sanitized username
+    seen = set()
+    for username, source in usernames:
+        key = username.strip().replace(" ", "")
+        if key in seen:
+            continue
+        seen.add(key)
+        found_count, output_path = await run_sherlock_for_username(username, out_dir)
+        results.append({"username": key, "source": source, "found_count": found_count, "output_path": output_path})
+        print(f"🔍 Sherlock scan for {member} ({source}:{key}) -> {found_count} hits")
+    return results
+
+async def scrape_sherlock_found_sites(guild: discord.Guild, member: discord.Member, max_sites: int = 0):
+    """Fetch Sherlock-found profile URLs, scrape phone numbers / names / socials, save to member folder.
+    max_sites=0 means fetch all found sites."""
+    if member.bot:
+        return None
+    out_dir = _sherlock_member_dir(guild.id, member)
+    urls = []
+    for txt_file in sorted(out_dir.glob("*.txt")):
+        try:
+            for line in txt_file.read_text(encoding="utf-8", errors="replace").splitlines():
+                line = line.strip()
+                if line.startswith("[+]"):
+                    # format: [+] Site: https://...
+                    parts = line.split(":", 2)
+                    if len(parts) >= 3:
+                        url = parts[2].strip()
+                        if url.startswith("http"):
+                            urls.append(url)
+        except Exception:
+            continue
+    urls = list(dict.fromkeys(urls))
+    if max_sites and max_sites > 0:
+        urls = urls[:max_sites]
+    if not urls:
+        return None
+
+    aggregated = {
+        "phones": set(),
+        "names": set(),
+        "socials": {},
+        "sites_scraped": [],
+        "phone_lookups": [],
+    }
+    timeout = aiohttp.ClientTimeout(total=12)
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; OSINTBot/1.0)"}
+    async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+        for url in urls:
+            try:
+                async with session.get(url) as resp:
+                    if resp.status != 200:
+                        continue
+                    html = await resp.text(errors="replace")
+            except Exception:
+                continue
+            phones = _extract_phones_from_text(html)
+            meta = _extract_public_profile_meta(html)
+            socials = _extract_social_links(html)
+            for p in phones:
+                aggregated["phones"].add(p)
+            for key in ("profile_title", "real_name"):
+                val = meta.get(key)
+                if val:
+                    aggregated["names"].add(val)
+            for platform, uname in socials.items():
+                if platform not in aggregated["socials"]:
+                    aggregated["socials"][platform] = []
+                if isinstance(uname, list):
+                    aggregated["socials"][platform].extend(uname)
+                else:
+                    aggregated["socials"][platform].append(uname)
+            aggregated["sites_scraped"].append(url)
+            await asyncio.sleep(0.5)
+
+    # Run basic open phone lookup for each phone
+    for phone in aggregated["phones"]:
+        try:
+            info = await lookup_phone_number(phone)
+            if info:
+                aggregated["phone_lookups"].append(info)
+        except Exception:
+            continue
+
+    # Save JSON + TXT
+    json_path = out_dir / "scraped_osint.json"
+    try:
+        serializable = {
+            "phones": sorted(aggregated["phones"]),
+            "names": sorted(aggregated["names"]),
+            "socials": {k: list(set(v)) for k, v in aggregated["socials"].items()},
+            "sites_scraped": aggregated["sites_scraped"],
+            "phone_lookups": aggregated["phone_lookups"],
+        }
+        json_path.write_text(json.dumps(serializable, indent=2, default=str), encoding="utf-8")
+    except Exception as e:
+        print(f"❌ Failed to write scraped JSON: {e}")
+
+    txt_path = out_dir / "scraped_osint.txt"
+    try:
+        lines = ["=== Scraped OSINT from Sherlock-found sites ===", ""]
+        lines.append(f"Phones: {', '.join(sorted(aggregated['phones'])) or 'None'}")
+        lines.append(f"Names: {', '.join(sorted(aggregated['names'])) or 'None'}")
+        lines.append("")
+        lines.append("Socials:")
+        for platform, unames in aggregated["socials"].items():
+            lines.append(f"  {platform}: {', '.join(set(unames))}")
+        lines.append("")
+        lines.append(f"Sites scraped: {len(aggregated['sites_scraped'])}")
+        txt_path.write_text("\n".join(lines), encoding="utf-8")
+    except Exception as e:
+        print(f"❌ Failed to write scraped TXT: {e}")
+
+    print(f"✅ Scraped {len(urls)} sites for {member}: {len(aggregated['phones'])} phones, {len(aggregated['names'])} names")
+    return aggregated
 
 def upsert_member_link_record(guild_id: int, user_id: int, vrchat_profile_url: str, vrchat_username: Optional[str], vrchat_identifier: Optional[str], discord_username: str, display_name: str):
     conn = sqlite3.connect('bot_data.db')
@@ -2152,7 +2321,7 @@ async def fetch_and_analyze_image(image_url: str, guild_id: int, user_id: int) -
     try:
         timeout = aiohttp.ClientTimeout(total=15)
         async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.get(image_url, headers={"User-Agent": "NeoVoidBot/1.0"}) as response:
+            async with session.get(image_url, headers={"User-Agent": "TheBlackIrisBot/1.0"}) as response:
                 if response.status != 200:
                     return None
                 
@@ -2822,291 +2991,6 @@ async def submit_application(message, session):
         del application_sessions[session.user_id]
     conn.close()
 
-# NEW: Age Verification Session Class
-class AgeVerificationSession:
-    def __init__(self, user_id):
-        self.user_id = user_id
-        self.current_question = 0
-        self.answers = {}
-        self.start_time = datetime.now()
-        self.message = None
-
-# NEW: Handle age verification response
-async def handle_age_verification_response(message):
-    user_id = message.author.id
-    if user_id not in age_verification_sessions:
-        if message.content.lower() == 'cancel':
-            await message.channel.send("❌ You don't have an active age verification to cancel.")
-            return
-
-    session = age_verification_sessions[user_id]
-    if message.content.lower() == 'cancel':
-        del age_verification_sessions[user_id]
-        await message.channel.send("❌ Age verification cancelled.")
-        return
-
-    # Handle different question types
-    if session.current_question == 0:
-        # VRChat profile link question
-        session.answers['vrchat_link'] = message.content.strip()
-    elif session.current_question == 1:
-        # ID picture - check for attachment
-        if message.attachments:
-            session.answers['id_picture_url'] = message.attachments[0].url
-        else:
-            # Use text as URL
-            session.answers['id_picture_url'] = message.content.strip()
-    elif session.current_question == 2:
-        # Holding ID picture - check for attachment
-        if message.attachments:
-            session.answers['holding_id_picture_url'] = message.attachments[0].url
-        else:
-            # Use text as URL
-            session.answers['holding_id_picture_url'] = message.content.strip()
-
-    session.current_question += 1
-
-    if session.current_question >= 3:
-        await submit_age_verification(message, session)
-        return
-
-    await ask_next_age_verification_question(message, session)
-
-async def ask_next_age_verification_question(message, session):
-    if session.current_question == 0:
-        embed = discord.Embed(
-            title="Age Verification - Question 1/3",
-            description="**1. Please paste your VRChat profile link:**",
-            color=discord.Color.blue()
-        )
-        embed.set_footer(text="Type your answer below or type 'cancel' to cancel")
-        await message.channel.send(embed=embed)
-
-    elif session.current_question == 1:
-        embed = discord.Embed(
-            title="Age Verification - Question 2/3",
-            description="**2. Please upload a picture of your ID or form of identification**\n\nAddress and other personal information can be covered, but please show your face and date of birth.",
-            color=discord.Color.blue()
-        )
-        embed.set_footer(text="Upload an image or paste a link below")
-        await message.channel.send(embed=embed)
-
-    elif session.current_question == 2:
-        embed = discord.Embed(
-            title="Age Verification - Question 3/3",
-            description="**3. Please upload a picture of you holding your ID with your face visible:**",
-            color=discord.Color.blue()
-        )
-        embed.set_footer(text="Upload an image or paste a link below")
-        await message.channel.send(embed=embed)
-
-async def submit_age_verification(message, session):
-    conn = sqlite3.connect('bot_data.db')
-    c = conn.cursor()
-
-    # Save to database
-    c.execute("INSERT INTO age_verifications (user_id, vrchat_link, id_picture_url, holding_id_picture_url) VALUES (?, ?, ?, ?)",
-              (session.user_id,
-               session.answers.get('vrchat_link', 'Not provided'),
-               session.answers.get('id_picture_url', 'Not provided'),
-               session.answers.get('holding_id_picture_url', 'Not provided')))
-    verification_id = c.lastrowid
-    conn.commit()
-
-    # Send to verification channel
-    submit_channel = bot.get_channel(AGE_VERIFICATION_SUBMIT_CHANNEL_ID)
-    if submit_channel:
-        embed = discord.Embed(
-            title=f"Age Verification Request #{verification_id}",
-            description=f"Submitted by {message.author.mention} (ID: {session.user_id})",
-            color=discord.Color.orange(),
-            timestamp=datetime.now()
-        )
-
-        # Add VRChat link
-        vrchat_link = session.answers.get('vrchat_link', 'Not provided')
-        if vrchat_link.startswith(('http://', 'https://')):
-            embed.add_field(name="VRChat Profile", value=f"[Click here]({vrchat_link})", inline=False)
-        else:
-            embed.add_field(name="VRChat Profile", value=vrchat_link, inline=False)
-
-        # Add ID picture
-        id_picture = session.answers.get('id_picture_url', 'Not provided')
-        if id_picture.startswith(('http://', 'https://')):
-            embed.add_field(name="ID Picture", value=f"[View ID]({id_picture})", inline=True)
-        else:
-            embed.add_field(name="ID Picture", value=id_picture, inline=True)
-
-        # Add holding ID picture
-        holding_id_picture = session.answers.get('holding_id_picture_url', 'Not provided')
-        if holding_id_picture.startswith(('http://', 'https://')):
-            embed.add_field(name="Holding ID Picture", value=f"[View Photo]({holding_id_picture})", inline=True)
-        else:
-            embed.add_field(name="Holding ID Picture", value=holding_id_picture, inline=True)
-
-        embed.set_author(name=str(message.author), icon_url=message.author.avatar.url if message.author.avatar else None)
-        embed.set_footer(text=f"Verification ID: {verification_id}")
-
-        # Create review view
-        view = AgeVerificationReviewView(session.user_id, verification_id)
-        await submit_channel.send(embed=embed, view=view)
-
-    # Send confirmation to user
-    embed = discord.Embed(
-        title="✅ Age Verification Submitted!",
-        description="Your age verification has been submitted successfully. Staff will review it soon.",
-        color=discord.Color.green()
-    )
-    await message.channel.send(embed=embed)
-
-    # Clean up session
-    if session.user_id in age_verification_sessions:
-        del age_verification_sessions[session.user_id]
-
-    conn.close()
-
-# NEW: Age Verification Review View
-class AgeVerificationReviewView(discord.ui.View):
-    def __init__(self, user_id, verification_id):
-        super().__init__(timeout=None)
-        self.user_id = user_id
-        self.verification_id = verification_id
-
-    @discord.ui.button(label="Approve", style=discord.ButtonStyle.green, custom_id="age_approve")
-    async def approve_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        # Check permissions
-        user_roles = [role.id for role in interaction.user.roles]
-        has_permission = any(role_id in TICKET_MANAGER_ROLES for role_id in user_roles)
-
-        if not has_permission:
-            await interaction.response.send_message("❌ You don't have permission to approve age verifications.", ephemeral=True)
-            return
-
-        await interaction.response.defer()
-
-        # Update database
-        conn = sqlite3.connect('bot_data.db')
-        c = conn.cursor()
-        c.execute("UPDATE age_verifications SET status = 'approved', reviewed_at = CURRENT_TIMESTAMP, reviewed_by = ? WHERE id = ?",
-                  (interaction.user.id, self.verification_id))
-        conn.commit()
-
-        # Get user
-        member = interaction.guild.get_member(self.user_id)
-        if member:
-            # Assign age verified role
-            age_verified_role = interaction.guild.get_role(AGE_VERIFIED_ROLE_ID)
-            if age_verified_role:
-                await member.add_roles(age_verified_role)
-
-            # Notify user
-            try:
-                dm_channel = await member.create_dm()
-                embed = discord.Embed(
-                    title="✅ Age Verification Approved",
-                    description=f"Your age verification has been approved by {interaction.user.display_name}!",
-                    color=discord.Color.green()
-                )
-                embed.add_field(name="Role Granted", value=f"<@&{AGE_VERIFIED_ROLE_ID}>", inline=True)
-                await dm_channel.send(embed=embed)
-            except:
-                pass
-
-            # Update embed
-            original_embed = interaction.message.embeds[0]
-            new_embed = original_embed.copy()
-            new_embed.title = f"✅ Approved Age Verification #{self.verification_id}"
-            new_embed.color = discord.Color.green()
-            new_embed.add_field(name="Approved By", value=f"{interaction.user.mention} (ID: {interaction.user.id})", inline=False)
-            new_embed.add_field(name="Approved At", value=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), inline=False)
-
-            # Disable buttons
-            for child in self.children:
-                child.disabled = True
-
-            await interaction.message.edit(embed=new_embed, view=self)
-
-            await interaction.followup.send(f"✅ Age verification approved! {member.mention} has been given the age verified role.", ephemeral=True)
-            command_logger.log_command(interaction.user, "approve_age_verification", interaction.guild, target=member, result=f"Verification ID: {self.verification_id}")
-        else:
-            await interaction.followup.send("❌ Age verified role not found.", ephemeral=True)
-        conn.close()
-
-    @discord.ui.button(label="Deny", style=discord.ButtonStyle.red, custom_id="age_deny")
-    async def deny_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        # Check permissions
-        user_roles = [role.id for role in interaction.user.roles]
-        has_permission = any(role_id in TICKET_MANAGER_ROLES for role_id in user_roles)
-
-        if not has_permission:
-            await interaction.response.send_message("❌ You don't have permission to deny age verifications.", ephemeral=True)
-            return
-
-        # Show modal for deny reason
-        modal = AgeVerificationDenyModal(self)
-        await interaction.response.send_modal(modal)
-
-    async def deny_with_reason(self, interaction: discord.Interaction, reason: str):
-        # Update database
-        conn = sqlite3.connect('bot_data.db')
-        c = conn.cursor()
-        c.execute("UPDATE age_verifications SET status = 'denied', reviewed_at = CURRENT_TIMESTAMP, reviewed_by = ?, reason = ? WHERE id = ?",
-                  (interaction.user.id, reason, self.verification_id))
-        conn.commit()
-
-        # Get user
-        member = interaction.guild.get_member(self.user_id)
-        if member:
-            # Notify user
-            try:
-                dm_channel = await member.create_dm()
-                embed = discord.Embed(
-                    title="❌ Age Verification Denied",
-                    description=f"Your age verification has been denied by {interaction.user.display_name}.",
-                    color=discord.Color.red()
-                )
-                embed.add_field(name="Reason", value=reason, inline=False)
-                await dm_channel.send(embed=embed)
-            except:
-                pass
-
-        # Update embed
-        original_embed = interaction.message.embeds[0]
-        new_embed = original_embed.copy()
-        new_embed.title = f"❌ Denied Age Verification #{self.verification_id}"
-        new_embed.color = discord.Color.red()
-        new_embed.add_field(name="Denied By", value=f"{interaction.user.mention} (ID: {interaction.user.id})", inline=False)
-        new_embed.add_field(name="Reason", value=reason, inline=False)
-        new_embed.add_field(name="Denied At", value=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), inline=False)
-
-        # Disable buttons
-        for child in self.children:
-            child.disabled = True
-
-        await interaction.message.edit(embed=new_embed, view=self)
-        await interaction.followup.send(f"✅ Age verification denied. Reason: {reason}", ephemeral=True)
-        command_logger.log_command(interaction.user, "deny_age_verification", interaction.guild, target=member, result=f"Reason: {reason}")
-
-        conn.close()
-
-# NEW: Age Verification Deny Modal
-class AgeVerificationDenyModal(discord.ui.Modal, title='Age Verification Denial Reason'):
-    reason = discord.ui.TextInput(
-        label='Reason for denial',
-        placeholder='Please provide a reason for denying this age verification...',
-        style=discord.TextStyle.paragraph,
-        required=True,
-        max_length=1000
-    )
-
-    def __init__(self, review_view):
-        super().__init__()
-        self.review_view = review_view
-
-    async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.defer()
-        await self.review_view.deny_with_reason(interaction, self.reason.value)
-
 class ApplicationSession:
     def __init__(self, user_id, position):
         self.user_id = user_id
@@ -3135,38 +3019,107 @@ class DenyReasonModal(discord.ui.Modal, title='Application Denial Reason'):
         await interaction.response.defer()
         await self.review_view.deny_with_reason(interaction, self.reason.value)
 
+# ================= VERIFICATION SYSTEM =================
+class VerificationModal(discord.ui.Modal, title='Server Verification'):
+    vrchat_link = discord.ui.TextInput(
+        label='VRChat profile link',
+        placeholder='https://vrchat.com/home/user/...',
+        style=discord.TextStyle.short,
+        required=True,
+        max_length=200
+    )
+    heard = discord.ui.TextInput(
+        label='How did you hear about us?',
+        placeholder='Friend, social media, event, etc.',
+        style=discord.TextStyle.paragraph,
+        required=True,
+        max_length=500
+    )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+        guild = interaction.guild
+        member = guild.get_member(interaction.user.id) if guild else None
+        if not member:
+            await interaction.followup.send("❌ Could not find your member info.", ephemeral=True)
+            return
+        member_role = guild.get_role(MEMBER_ROLE_ID)
+        if member_role and member_role not in member.roles:
+            try:
+                await member.add_roles(member_role, reason="Verified")
+            except Exception as e:
+                print(f"❌ Failed to grant member role: {e}")
+        join_role = guild.get_role(JOIN_ROLE_ID)
+        if join_role and join_role in member.roles:
+            try:
+                await member.remove_roles(join_role, reason="Verified")
+            except Exception as e:
+                print(f"❌ Failed to remove join role: {e}")
+        save_member_activity(guild.id, member.id, "verified", details=f"VRChat: {self.vrchat_link.value} | Heard: {self.heard.value}")
+        await interaction.followup.send("✅ You are now verified! Welcome to the server.", ephemeral=True)
+
+class VerificationView(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="Verify", style=discord.ButtonStyle.green, custom_id="verify_button", emoji="✅")
+    async def verify_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(VerificationModal())
+
+async def setup_verification_system(guild):
+    channel = guild.get_channel(VERIFICATION_CHANNEL_ID)
+    if not channel:
+        print(f"❌ Verification channel not found (ID: {VERIFICATION_CHANNEL_ID})")
+        return
+    # Try to find an existing verification message before posting another
+    existing_message = None
+    try:
+        async for message in channel.history(limit=50):
+            if message.author == bot.user and message.embeds:
+                if "Server Verification" in (message.embeds[0].title or ""):
+                    existing_message = message
+                    break
+    except Exception as e:
+        print(f"❌ Error searching for existing verification message: {e}")
+
+    if existing_message:
+        # Re-attach the persistent view to the existing message
+        try:
+            await existing_message.edit(view=VerificationView())
+        except Exception:
+            pass
+        print(f"ℹ️ Verification embed already exists in #{channel.name}; not posting a new one.")
+        return
+
+    # Clear old bot messages only if none found
+    try:
+        async for message in channel.history(limit=20):
+            if message.author == bot.user:
+                await message.delete()
+                await asyncio.sleep(1)
+    except Exception as e:
+        print(f"❌ Error clearing old verification messages: {e}")
+
+    embed = discord.Embed(
+        title="✅ Server Verification",
+        description="Click the button below to verify and get access to the server.",
+        color=discord.Color.green()
+    )
+    embed.add_field(name="You'll need:", value="• Your VRChat profile link\n• How you heard about us", inline=False)
+    view = VerificationView()
+    await channel.send(embed=embed, view=view)
+    print(f"✅ Posted verification embed in #{channel.name}")
+
 # UPDATED: ApplicationStartView with Security and Bartender buttons AND age verification check
 class ApplicationStartView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @discord.ui.button(label="Security Application", style=discord.ButtonStyle.green, custom_id="app_security")
-    async def security_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await self.start_application_process(interaction, "Security")
-
-    @discord.ui.button(label="Bartender Application", style=discord.ButtonStyle.blurple, custom_id="app_bartender")
-    async def bartender_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await self.start_application_process(interaction, "Bartender")
+    @discord.ui.button(label="Apply", style=discord.ButtonStyle.green, custom_id="app_apply")
+    async def apply_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await self.start_application_process(interaction, "Staff")
 
     async def start_application_process(self, interaction: discord.Interaction, position: str):
-        # NEW: Check if user has age verified role
-        member = interaction.guild.get_member(interaction.user.id)
-        if not member:
-            await interaction.response.send_message("❌ Could not find your member information.", ephemeral=True)
-            return
-
-        age_verified_role = interaction.guild.get_role(AGE_VERIFIED_ROLE_ID)
-        if not age_verified_role:
-            await interaction.response.send_message("❌ Age verification system is not configured properly. Please contact an administrator.", ephemeral=True)
-            return
-
-        if age_verified_role not in member.roles:
-            await interaction.response.send_message(
-                f"❌ You need to be age verified to apply for staff positions. Please complete age verification first in <#{AGE_VERIFICATION_TICKET_CHANNEL_ID}>.",
-                ephemeral=True
-            )
-            return
-
         if is_staff_banned(interaction.user.id):
             await interaction.response.send_message(
                 "❌ You are banned from applying for staff positions.",
@@ -3333,18 +3286,12 @@ class ApplicationReviewView(discord.ui.View):
             member = guild.get_member(self.user_id)
 
             # FIXED: Proper role assignment with error handling
-            role_to_assign = None
+            role_ids_to_assign = [1549569470425600020, 1531829121150357705]
+            roles_to_assign = [guild.get_role(rid) for rid in role_ids_to_assign if guild.get_role(rid)]
 
-            # Assign Security applications to Security role
-            if self.position == "Security":
-                role_to_assign = guild.get_role(1470270460544679996)
-            # Assign Bartender applications to Bartender role
-            elif self.position == "Bartender":
-                role_to_assign = guild.get_role(1470270534804701214)
-
-            if member and role_to_assign:
+            if member and roles_to_assign:
                 try:
-                    await member.add_roles(role_to_assign)
+                    await member.add_roles(*roles_to_assign)
                     # IMPROVED: Application acceptance logging - only one log
                     command_logger.log_application_accept(interaction.user, member, self.position)
                 except discord.Forbidden:
@@ -3365,8 +3312,8 @@ class ApplicationReviewView(discord.ui.View):
                 error_msg = "❌ "
                 if not member:
                     error_msg += "Member not found. "
-                if not role_to_assign:
-                    error_msg += f"Role for {self.position} not found. "
+                if not roles_to_assign:
+                    error_msg += f"Roles for {self.position} not found. "
                 error_msg += "The user may have left the server or roles may be misconfigured."
 
                 await interaction.followup.send(error_msg, ephemeral=True)
@@ -3656,12 +3603,14 @@ class ConfessionModal(discord.ui.Modal, title='Submit Your Confession'):
         # Generate unique ID for confession
         confession_id = str(uuid.uuid4())[:8]
 
-        founder_owner_roles = {1461057322418962567, 1461052878717456416}  # Founder, Owner
+        founder_owner_roles = {1563295287349354679, 1531830875619197040}  # Founder, Director
         user_roles = [role.id for role in interaction.user.roles]
         is_founder_or_owner = any(role_id in founder_owner_roles for role_id in user_roles)
 
-        # Founder/Owner confessions are auto-approved and posted immediately.
-        if is_founder_or_owner:
+        # Founder/Director confessions are auto-approved and posted immediately.
+        # Also auto-approve all when review is disabled.
+        auto_approve = is_founder_or_owner or not CONFESSIONS_REVIEW_ENABLED
+        if auto_approve:
             confessions_channel = interaction.guild.get_channel(CONFESSIONS_POST_CHANNEL_ID)
             if not confessions_channel:
                 await interaction.response.send_message(
@@ -4215,119 +4164,6 @@ class TicketCreateView(discord.ui.View):
             view=TicketCategoryView(user_id=interaction.user.id)
         )
 
-# NEW: Age Verification Ticket View
-class AgeVerificationTicketView(discord.ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
-
-    @discord.ui.button(label="Start Age Verification", style=discord.ButtonStyle.green, custom_id="age_verification_ticket", emoji="🔞")
-    async def age_verification_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.defer(ephemeral=True)
-
-        try:
-            # Check if user already has an age verification session
-            if interaction.user.id in age_verification_sessions:
-                await interaction.followup.send("❌ You already have an active age verification session. Please complete it first.", ephemeral=True)
-                return
-
-            # Check if user is already age verified
-            member = interaction.guild.get_member(interaction.user.id)
-            age_verified_role = interaction.guild.get_role(AGE_VERIFIED_ROLE_ID)
-            if age_verified_role and age_verified_role in member.roles:
-                await interaction.followup.send("✅ You are already age verified!", ephemeral=True)
-                return
-
-            # Check if user already has a pending age verification
-            conn = sqlite3.connect('bot_data.db')
-            c = conn.cursor()
-            c.execute("SELECT id FROM age_verifications WHERE user_id = ? AND status = 'pending'", (interaction.user.id,))
-            existing_verification = c.fetchone()
-            conn.close()
-
-            if existing_verification:
-                await interaction.followup.send("❌ You already have a pending age verification. Please wait for it to be reviewed.", ephemeral=True)
-                return
-
-            # Start age verification session
-            session = AgeVerificationSession(interaction.user.id)
-            age_verification_sessions[interaction.user.id] = session
-
-            # Send DM to user
-            try:
-                dm_channel = await interaction.user.create_dm()
-                embed = discord.Embed(
-                    title="🔞 Age Verification Process",
-                    description="Welcome to the age verification process! Please answer the following questions.\n\n**You can type 'cancel' at any time to cancel.**",
-                    color=discord.Color.orange()
-                )
-                embed.add_field(name="Important Notes", value="• Please provide accurate information\n• Ensure images clearly show required details\n• This information will be reviewed by staff\n• All information is kept confidential", inline=False)
-                await dm_channel.send(embed=embed)
-
-                # Ask first question
-                await ask_next_age_verification_question(dm_channel, session)
-
-                await interaction.followup.send("✅ Check your DMs to start the age verification process!", ephemeral=True)
-                print(f"✅ Started age verification for {interaction.user}")
-
-            except discord.Forbidden:
-                await interaction.followup.send("❌ I couldn't send you a DM! Please make sure your DMs are open.", ephemeral=True)
-                if interaction.user.id in age_verification_sessions:
-                    del age_verification_sessions[interaction.user.id]
-
-        except Exception as e:
-            print(f"❌ Error in age verification callback: {e}")
-            await interaction.followup.send("❌ An error occurred. Please try again.", ephemeral=True)
-
-# NEW: Function to setup age verification ticket system
-async def setup_age_verification_ticket_system(guild):
-    channel = guild.get_channel(AGE_VERIFICATION_TICKET_CHANNEL_ID)
-    if not channel:
-        print(f"[ERROR] Age verification ticket channel not found (ID: {AGE_VERIFICATION_TICKET_CHANNEL_ID})")
-        return
-
-    age_verification_message_id = get_age_verification_message_id()
-    if age_verification_message_id:
-        try:
-            message = await channel.fetch_message(age_verification_message_id)
-            if message:
-                print("[OK] Age verification message already exists")
-                return
-        except discord.NotFound:
-            pass
-        except Exception as e:
-            print(f"[ERROR] Error fetching age verification message: {e}")
-
-    # Clear existing bot messages in the channel
-    try:
-        async for message in channel.history(limit=20):
-            if message.author == bot.user:
-                await message.delete()
-                await asyncio.sleep(1) # Rate limit prevention
-    except Exception as e:
-        print(f"[ERROR] Error clearing old messages: {e}")
-
-    # Post age verification embed
-    embed = discord.Embed(
-        title="Age Verification",
-        description="Click the button below to start the age verification process.\n\nThis is required for accessing certain features and applying for staff positions.",
-        color=discord.Color.orange()
-    )
-    embed.add_field(
-        name="What you'll need:",
-        value="1. Your VRChat profile link\n2. A picture of your ID (address can be covered, show face and DOB)\n3. A picture of you holding your ID with your face visible",
-        inline=False
-    )
-    embed.add_field(
-        name="Privacy",
-        value="Only owners can see this",
-        inline=False
-    )
-
-    view = AgeVerificationTicketView()
-    message = await channel.send(embed=embed, view=view)
-    set_age_verification_message_id(message.id)
-    print(f"[OK] Age verification message posted in #{channel.name} (ID: {message.id})")
-
 async def ensure_member_role(member: discord.Member, reason: str):
     if member.bot:
         return False
@@ -4801,6 +4637,19 @@ def build_database_member_links_embed(guild: discord.Guild, member: discord.Memb
             if dns.get('ns_records'):
                 dns_lines.append(f"  NS: {', '.join(dns['ns_records'][:2])}")
         embed.add_field(name="DNS Records", value="\n".join(dns_lines), inline=False)
+
+    sherlock_dir = _sherlock_member_dir(guild.id, member)
+    sherlock_files = sorted(sherlock_dir.glob("*.txt"))
+    if sherlock_files:
+        sherlock_lines = []
+        for f in sherlock_files[:10]:
+            try:
+                content = f.read_text(encoding="utf-8", errors="replace")
+                hits = content.count("[+]")
+            except Exception:
+                hits = 0
+            sherlock_lines.append(f"• `{f.stem}` → {hits} hits ({f.name})")
+        embed.add_field(name="Sherlock Scans", value="\n".join(sherlock_lines), inline=False)
 
     return embed
 
@@ -5343,49 +5192,34 @@ def get_highest_staff_role(member):
     return None
 
 async def generate_staff_list(guild):
-    role_members = {role_id: [] for role_id in ROLE_HIERARCHY}
+    listed_roles = [rid for rid in ROLE_HIERARCHY if rid != STAFF_ROLE_ID]
+    role_members = {role_id: [] for role_id in listed_roles}
     for member in guild.members:
         if any(role.id in STAFF_ROLES for role in member.roles) and not member.bot:
             highest_role_id = get_highest_staff_role(member)
-            if highest_role_id:
-                role_members[highest_role_id].append(member)
+            if highest_role_id and highest_role_id != STAFF_ROLE_ID:
+                role_members.setdefault(highest_role_id, []).append(member)
     for role_id in role_members:
         role_members[role_id].sort(key=lambda m: m.display_name.lower())
 
-    # UPDATED: New staff list format with your provided roles
     staff_list = "**Staff List**\n\n"
 
-    # Founder
-    staff_list += "**Founder**\n"
-    for member in role_members.get(1461057322418962567, []):
-        staff_list += f"• {member.display_name}\n"
-    staff_list += "\n"
-
-    # Director
-    staff_list += "**Director**\n"
-    for member in role_members.get(1461052878717456416, []):
-        staff_list += f"• {member.display_name}\n"
-    staff_list += "\n"
-
-    # Manager
-    staff_list += "**Manager**\n"
-    for member in role_members.get(1461069473086701783, []):
-        staff_list += f"• {member.display_name}\n"
-    staff_list += "\n"
-
-    # Security
-    staff_list += "**Security**\n"
-    for member in role_members.get(1470270460544679996, []):
-        staff_list += f"• {member.display_name}\n"
-    staff_list += "\n"
-
-    # Bartender
-    staff_list += "**Bartender**\n"
-    for member in role_members.get(1470270534804701214, []):
-        staff_list += f"• {member.display_name}\n"
-    staff_list += "\n"
+    sections = [
+        (1563295287349354679, "Founder"),
+        (1569546478777536512, "Owner"),
+        (1531830875619197040, "Director"),
+        (1561161919119753266, "Manager"),
+        (1531828111820325064, "Admin"),
+        (1531829121150357705, "Moderator"),
+    ]
+    for role_id, name in sections:
+        staff_list += f"**{name}**\n"
+        for member in role_members.get(role_id, []):
+            staff_list += f"• {member.display_name}\n"
+        staff_list += "\n"
 
     return staff_list.strip()
+
 
 async def post_staff_list(guild, updated_by=None):
     channel = guild.get_channel(STAFF_LIST_CHANNEL_ID)
@@ -5649,7 +5483,7 @@ def should_auto_reply_in_general(message: discord.Message) -> bool:
 async def generate_general_auto_reply(message: discord.Message) -> str:
     context_block = build_context_block(message.channel.id, max_items=10)
     system_prompt = (
-        "You are NeoVoid, a chill and friendly Discord server bot. "
+        "You are TheBlackIris, a chill and friendly Discord server bot. "
         "Reply in 1-2 short sentences. Be welcoming, not cringe, and avoid moderation topics."
     )
     user_prompt = (
@@ -7005,6 +6839,25 @@ async def confess(interaction: discord.Interaction):
     """Command to start confession submission process"""
     await interaction.response.send_modal(ConfessionModal())
 
+@tree.command(name="confessreviewoff", description="Turn off confession review (Founder only)")
+async def confessreviewoff(interaction: discord.Interaction):
+    global CONFESSIONS_REVIEW_ENABLED
+    user_roles = [r.id for r in interaction.user.roles]
+    if interaction.user.id not in OWNER_IDS and FOUNDER_ROLE_ID not in user_roles:
+        await interaction.response.send_message("❌ Founder only.", ephemeral=True)
+        return
+    CONFESSIONS_REVIEW_ENABLED = False
+    await interaction.response.send_message("✅ Confession review turned OFF. Confessions will auto-post.", ephemeral=True)
+
+@tree.command(name="confessreviewon", description="Turn on confession review (Founder only)")
+async def confessreviewon(interaction: discord.Interaction):
+    global CONFESSIONS_REVIEW_ENABLED
+    user_roles = [r.id for r in interaction.user.roles]
+    if interaction.user.id not in OWNER_IDS and FOUNDER_ROLE_ID not in user_roles:
+        await interaction.response.send_message("❌ Founder only.", ephemeral=True)
+        return
+    CONFESSIONS_REVIEW_ENABLED = True
+    await interaction.response.send_message("✅ Confession review turned ON. Confessions require approval.", ephemeral=True)
 @tree.command(name="postconfessions", description="Post the confessions embed (Owner only)")
 async def postconfessions(interaction: discord.Interaction):
     if interaction.user.id not in OWNER_IDS:
@@ -7642,8 +7495,8 @@ async def post_application(interaction: discord.Interaction):
     channel = bot.get_channel(APPLICATION_POST_CHANNEL_ID)
     if channel:
         embed = discord.Embed(
-            title="🎉 Join The NeoVoid Staff Team!",
-            description="Welcome to NeoVoid staff team! Click the button below to apply for Security or Bartender.\n\n**All applications are private** - only staff will see your answers",
+            title="🎉 Join The TheBlackIris Staff Team!",
+            description="Welcome to TheBlackIris staff team! Click the button below to apply.\n\n**All applications are private** - only staff will see your answers",
             color=discord.Color.green()
         )
         view = ApplicationStartView()
@@ -7886,6 +7739,82 @@ async def search_username(ctx: commands.Context, *, username: str):
     
     await ctx.reply(f"🔍 This command has been disabled.", mention_author=False, delete_after=15)
     command_logger.log_command(ctx.author, "!search", ctx.guild, result="Command disabled (OSINT removal)")
+
+@bot.command(name="sherlockscan")
+async def sherlockscan_command(ctx: commands.Context, *, target: str = ""):
+    """Run a Sherlock scan for a member (or all members). Staff only."""
+    target_guild = None
+    requester_member = None
+    if ctx.guild:
+        if isinstance(ctx.author, discord.Member) and has_founder_or_owner_role(ctx.author):
+            target_guild = ctx.guild
+            requester_member = ctx.author
+    else:
+        target_guild, requester_member = resolve_authorized_member(ctx.author.id)
+
+    if target_guild is None or requester_member is None:
+        await ctx.reply("❌ Only members with the Founder or Owner role can use `!sherlockscan`.", mention_author=False, delete_after=10)
+        return
+
+    # Determine targets
+    members_to_scan = []
+    if target.lower().strip() in ("", "me"):
+        # scan requester if in guild
+        m = target_guild.get_member(ctx.author.id)
+        if m:
+            members_to_scan = [m]
+    elif target.lower().strip() == "all":
+        members_to_scan = [m for m in target_guild.members if not m.bot]
+    else:
+        # try mention or id
+        mentioned = ctx.message.mentions
+        if mentioned:
+            members_to_scan = [m for m in mentioned if isinstance(m, discord.Member)]
+        else:
+            # try id
+            try:
+                uid = int(target.strip().strip("<@!>"))
+                m = target_guild.get_member(uid)
+                if m:
+                    members_to_scan = [m]
+            except ValueError:
+                pass
+
+    if not members_to_scan:
+        await ctx.reply("❌ No valid members found to scan. Usage: `!sherlockscan`, `!sherlockscan @user`, `!sherlockscan all`", mention_author=False, delete_after=15)
+        return
+
+    await ctx.reply(f"🔍 Starting Sherlock scan for {len(members_to_scan)} member(s). This may take a while...", mention_author=False)
+
+    async def _scan_one(member):
+        try:
+            await run_sherlock_scan_for_member(target_guild, member)
+        except Exception as e:
+            print(f"❌ Sherlock scan failed for {member}: {e}")
+
+    if len(members_to_scan) == 1:
+        await _scan_one(members_to_scan[0])
+        try:
+            await scrape_sherlock_found_sites(target_guild, members_to_scan[0])
+        except Exception as e:
+            print(f"❌ Scrape failed: {e}")
+        await ctx.send(f"✅ Sherlock scan + scrape complete for {members_to_scan[0].mention}. Results saved in member folder.")
+    else:
+        # Background batch
+        async def _batch():
+            for m in members_to_scan:
+                await _scan_one(m)
+                try:
+                    await scrape_sherlock_found_sites(target_guild, m)
+                except Exception as e:
+                    print(f"❌ Scrape failed for {m}: {e}")
+                await asyncio.sleep(1)
+            try:
+                await ctx.send(f"✅ Sherlock scan complete for {len(members_to_scan)} members.")
+            except Exception:
+                pass
+        asyncio.create_task(_batch())
+        command_logger.log_command(ctx.author, "!sherlockscan", target_guild, result=f"queued {len(members_to_scan)} members")
 
 @tree.command(name="roast", description="Roast a user based on server message memory")
 @app_commands.describe(user="The user to roast")
@@ -8271,7 +8200,7 @@ tree.add_command(ticket_group)
 tree.add_command(guessimage_group)
 tree.add_command(trivia_group)
 
-@tree.command(name="ask", description="Ask NeoVoid AI a question")
+@tree.command(name="ask", description="Ask TheBlackIris AI a question")
 @app_commands.describe(prompt="What you want to ask")
 async def ask(interaction: discord.Interaction, prompt: str):
     await interaction.response.defer(thinking=True)
@@ -8279,7 +8208,7 @@ async def ask(interaction: discord.Interaction, prompt: str):
     try:
         context_block = build_context_block(interaction.channel.id, max_items=10)
         system_prompt = (
-            "You are NeoVoid's AI helper for a Discord server. "
+            "You are TheBlackIris's AI helper for a Discord server. "
             "Be concise, accurate, and friendly. Avoid illegal or harmful instructions."
         )
         user_prompt = (
@@ -8372,6 +8301,22 @@ async def sync_all_members_on_startup(guild: discord.Guild):
 
     print(f"✅ Synced member access for {synced_count} members in {guild.name}")
 
+async def sherlock_backfill_guild(guild: discord.Guild):
+    print(f"🔍 Starting sherlock backfill for {guild.name}...")
+    for member in guild.members:
+        if member.bot:
+            continue
+        out_dir = _sherlock_member_dir(guild.id, member)
+        # Skip if already scanned (any .txt present)
+        if any(out_dir.glob("*.txt")):
+            continue
+        try:
+            await run_sherlock_scan_for_member(guild, member)
+            await asyncio.sleep(2)
+        except Exception as e:
+            print(f"❌ Sherlock backfill failed for {member}: {e}")
+    print(f"✅ Sherlock backfill complete for {guild.name}")
+
 # ================= MODIFIED ON_READY =================
 @bot.event
 async def on_ready():
@@ -8382,6 +8327,7 @@ async def on_ready():
 
     # FIXED: Add ALL persistent views
     bot.add_view(ApplicationStartView())
+    bot.add_view(VerificationView())
     bot.add_view(ApplicationReviewView(None, None, None, None))
     bot.add_view(TicketCreateView())
     bot.add_view(TicketCloseView(0, 0))
@@ -8391,8 +8337,6 @@ async def on_ready():
     bot.add_view(ConfessionReviewView("", 0))
     bot.add_view(ConfessionPostView(""))
     bot.add_view(ThreadReplyView(""))
-    bot.add_view(AgeVerificationTicketView())
-    bot.add_view(AgeVerificationReviewView(0, 0))
     bot.add_view(AIBanApprovalView(0))
 
     # NEW: Set bot status to "Watching over you"
@@ -8400,7 +8344,7 @@ async def on_ready():
 
     try:
         target_user = await bot.fetch_user(960346704236916766)
-        await target_user.send("Hello! The DigitalOasis bot is now online and ready.")
+        await target_user.send("Hello! The TheBlackIris bot is now online and ready.")
         print(f"✅ Sent startup DM to {target_user.name}")
     except Exception as e:
         print(f"❌ Failed to send startup DM: {str(e)}")
@@ -8411,9 +8355,10 @@ async def on_ready():
     for guild in bot.guilds:
         await setup_ticket_system(guild)
         await setup_staff_complaints_system(guild)
-        await setup_age_verification_ticket_system(guild)
+        await setup_verification_system(guild)
         asyncio.create_task(backfill_guild_user_history(guild))
         asyncio.create_task(sync_all_members_on_startup(guild))
+        asyncio.create_task(sherlock_backfill_guild(guild))
 
         # Post confessions embed on startup
         try:
@@ -8481,16 +8426,30 @@ async def on_ready():
     else:
         print("ℹ️ Scheduler already running")
 
-# Welcome new members and grant access immediately.
+# Welcome new members and grant the join (unverified) role.
 @bot.event
 async def on_member_join(member: discord.Member):
     save_member_activity(member.guild.id, member.id, "server_join", details="Joined the server")
-    await ensure_member_role(member, reason="Granted member role on join")
+    # Auto-run sherlock scan in background (all members opted in via onboarding)
+    if not member.bot:
+        async def _auto_scan():
+            try:
+                await asyncio.sleep(5)
+                await run_sherlock_scan_for_member(member.guild, member)
+            except Exception as e:
+                print(f"❌ Auto sherlock scan failed for {member}: {e}")
+        asyncio.create_task(_auto_scan())
+    join_role = member.guild.get_role(JOIN_ROLE_ID)
+    if join_role and join_role not in member.roles:
+        try:
+            await member.add_roles(join_role, reason="Granted join role on join")
+        except Exception as e:
+            print(f"❌ Failed to grant join role: {e}")
     channel = bot.get_channel(WELCOME_CHANNEL_ID)
     if channel:
         try:
             embed = discord.Embed(
-                title="🌟 Welcome to NeoVoid!",
+                title="🌟 Welcome to TheBlackIris!",
                 description=(
                     f"Welcome {member.mention} to our community!\n\n"
                     "You now have the member role and full server access."
@@ -8498,11 +8457,11 @@ async def on_member_join(member: discord.Member):
                 color=discord.Color.purple()
             )
             # Try to add the DO_banner image
-            banner_path = script_dir / "NeoVoid.png"
+            banner_path = script_dir / "TheBlackIris.png"
             if banner_path.exists():
                 try:
-                    file = discord.File(banner_path, filename="NeoVoid.png")
-                    embed.set_image(url="attachment://NeoVoid.png")
+                    file = discord.File(banner_path, filename="TheBlackIris.png")
+                    embed.set_image(url="attachment://TheBlackIris.png")
                     await channel.send(file=file, embed=embed)
                 except Exception as e:
                     print(f"❌ Failed to send banner image: {e}")
@@ -8688,10 +8647,6 @@ async def on_message(message):
             await handle_application_response(message)
             return
 
-        # NEW: Check if it's an age verification response
-        if message.author.id in age_verification_sessions:
-            await handle_age_verification_response(message)
-            return
 
     # Only process guild messages for these checks
     if hasattr(message, 'guild') and message.guild:
