@@ -1,4 +1,4 @@
-# TheBlackIris2
+# NeoVoid
 
 A multi-purpose Discord bot for VRChat community management — handles member linking, age verification, staff applications, moderation logging, and more.
 
